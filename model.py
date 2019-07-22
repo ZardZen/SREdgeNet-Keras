@@ -177,7 +177,16 @@ def merge(scale, num_filters=128, num_res_blocks=16, res_block_scaling=None, tan
     return Model([x_in,x_mask], x)
 
 def SREdgeNet():
-  
+    x_in = Input(shape=(None, None, 3))
+    a = b = edsr(x_in)
+    b = rcf(b)
+    x = merge([a, b])
+    
+    return Model(x_in, x)
+    
+   
+   
+ 
   
   
   
