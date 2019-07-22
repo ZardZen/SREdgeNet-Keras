@@ -73,7 +73,7 @@ def edsr(scale, num_filters=64, num_res_blocks=8, res_block_scaling=None, tanh_a
 def rcf(input_shape=None):
     # Input
     inputs = Input(shape=input_shape)
-    x = Lambda(lambda x: x / 255, name='pre-process')(inputs)
+    #x = Lambda(lambda x: x / 255, name='pre-process')(inputs)
 
     # Block 1
     x1_conv1 = Conv2D(64, (3, 3), activation='relu', padding='same', name='block1_conv1')(inputs)
