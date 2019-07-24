@@ -178,11 +178,19 @@ def merge(scale, num_filters=128, num_res_blocks=16, res_block_scaling=None, tan
 
 def SREdgeNet():
     x_in = Input(shape=(None, None, 3))
-    a = b = edsr(x_in)
-    b = rcf(b)
-    x = merge([a, b])
+    model1 = edsr(x_in)
+    model1.load_weights(model_path+"edsr.h5")
+    out1 = model1.output
     
-    return Model(x_in, x)
+    model2 = rcf(out1)
+    model2.load_weights(model_path+"rcf_our_Adam.h5")
+    out2 = model2.output
+    
+    model3 = merge([out1,out2])
+    model3.load_weights(model_path+"MergeNet.h5")
+    out3 = model3.output
+    
+    return Model(x_in, out3)
     
    
    
