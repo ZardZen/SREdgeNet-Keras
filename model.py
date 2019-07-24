@@ -4,6 +4,7 @@ import numpy as np
 import tensorflow as tf
 
 DIV2K_RGB_MEAN = np.array([0.4488, 0.4371, 0.4040]) * 255
+model_path = "models/"
 
 def SubpixelConv2D(scale, **kwargs):
     return Lambda(lambda x: tf.depth_to_space(x, scale), **kwargs)
