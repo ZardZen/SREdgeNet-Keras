@@ -3,7 +3,7 @@ from keras.optimizers import Adam, SGD
 from keras.models import load_model
 from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, TensorBoard
 import argparse
-from edsr import edsr
+from model import SREdgeNet
 import os
 from keras.utils import multi_gpu_model
 import tensorflow as tf
