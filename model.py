@@ -1,5 +1,5 @@
 from keras.layers import Add, Conv2D, Input, Lambda, Activation, Concatenate, MaxPooling2D, Conv2DTranspose
-from keras.models import Model, load_weights
+from keras.models import Model
 import numpy as np
 import tensorflow as tf
 
