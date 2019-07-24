@@ -23,13 +23,13 @@ def args_parse():
     
     ap = argparse.ArgumentParser(description='Keras Training')
     # ========= paths for training
-    ap.add_argument("-npath", "--npy_path", default="data/", required=False,
+    ap.add_argument("-npath", "--npy_path", default="/home/workplace/yz/works/EDSR-Keras-master/data/", required=False,
                     help="path to npy. files to train")
     ap.add_argument("-mpath", "--model_path", default="model_save/", required=False,
                     help="path to save the output model")
     ap.add_argument("-lpath", "--log_path", default="log/", required=False,
                     help="path to save the 'log' files")
-    ap.add_argument("-name","--model_name", default="edsr.h5", required=False,
+    ap.add_argument("-name","--model_name", default="SREdgeNet.h5", required=False,
                     help="output of model name")
     # ========= parameters for training
 
@@ -37,7 +37,7 @@ def args_parse():
                     help="load pre-train model or not")
     ap.add_argument('-bs', '--batch_size', default=2, type=int,
                     help='batch size')
-    ap.add_argument('-ep', '--epoch', default=30, type=int,
+    ap.add_argument('-ep', '--epoch', default=5, type=int,
                     help='epoch')
     ap.add_argument('-m', '--momentum', default=0.9, type=float, metavar='M',
                     help='momentum')
@@ -46,15 +46,15 @@ def args_parse():
 
 def train(args):
     scale = 2
-    X_train = np.load(args["npy_path"] + 'lr.npy')
+    X_train = np.load(args["npy_path"] + 'lr_crop.npy')
     #X_val = np.load(args["npy_path"] + 'X_val.npy')
-    y_train = np.load(args["npy_path"] + 'hr.npy')
+    y_train = np.load(args["npy_path"] + 'hr_crop.npy')
     #y_val = np.load(args["npy_path"] + 'y_val.npy')
     if args["pretrain"]:
         model = load_model(args["model_path"] + args["model_name"],
                        custom_objects={'loss': mae, 'psnr': psnr})
     else:
-        model = edsr(scale, num_filters=256, num_res_blocks=32, res_block_scaling=0.1, tanh_activation=False)
+        model = SREdgeNet()
 
     model.summary()
     lr_decay = ReduceLROnPlateau(monitor='loss', factor=0.5, patience=10, verbose=1, min_lr=1e-5)
